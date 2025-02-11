@@ -3,11 +3,12 @@
 #include <vector>
 
 const char* instruction = "\x75"; // jne
+std::uintptr_t offset = 0x4FB8AE7;
 
-void Patch(std::fstream &file, std::uintptr_t pos)
+void Patch(std::fstream &file)
 {
 	// overrides the "je" with a "jne" instruction
-	file.seekg(pos, std::ios::beg);
+	file.seekg(offset, std::ios::beg);
 	file.write(instruction, strlen(instruction));
 }
 
@@ -24,7 +25,7 @@ int main(int argc, char* argv[])
 		std::cin.get();
 	}
 
-	Patch(file, 0x4FB8AE7);
+	Patch(file);
 
 	file.close();
 
