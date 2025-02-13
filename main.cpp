@@ -2,6 +2,8 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include <cstdint>
+#include <cstring>
 
 const char* instruction = "\x75"; // jne
 
@@ -58,12 +60,12 @@ int main(int argc, char* argv[])
 	}
 
 	std::streamsize size = file.tellg();
-    	file.seekg(0, std::ios::beg);
+    file.seekg(0, std::ios::beg);
 
-    	std::vector<unsigned char> buffer(size);
+    std::vector<unsigned char> buffer(size);
 	std::uintptr_t offset = 0;
 
-	std::string Pattern = "74 05 E8 12 85 4A FE 48 8D";
+	std::string pattern = "74 05 E8 12 85 4A FE 48 8D";
 	
 	if (file.read(reinterpret_cast<char*>(buffer.data()), size)) { 
         	offset = FindOffset(pattern, buffer);
